@@ -1,0 +1,26 @@
+# 1. Dependencies (Wajib diabaikan)
+node_modules/
+
+# 2. Environment Variables (Rahasia)
+.env
+
+# 3. Database SQLite (Agar database lokal tidak ikut ter-push)
+*.db
+*.db-journal
+prisma/*.db
+prisma/*.db-journal
+
+# 4. Folder AI Agents & Editor
+.devin/
+.cursor/
+.claude/
+.agents/
+prisma.config.ts
+
+# 5. File Arsip
+*.zip
+*.rar
+*.tar.gz
+
+# 6. Folder Bukti Pengujian (Opsional: un-comment baris di bawah jika tidak ingin mem-push folder ini)
+# bukti pengujian/
