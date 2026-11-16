@@ -32,7 +32,9 @@ export async function createProduct(req: Request, res: Response) {
 
 // PUT: mengupdate data yang sudah ada (berdasarkan id di body)
 export async function updateProduct(req: Request, res: Response) {
-  const { id, name, price } = req.body;
+ const id = req.params.id ?? req.body.id;
+  const { name, price } = req.body;
+
   if (!id || !name || price === undefined) {
     return res.status(400).json({ message: 'Kesalahan validasi: id, name, dan price wajib diisi' });
   }
