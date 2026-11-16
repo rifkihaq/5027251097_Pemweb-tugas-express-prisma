@@ -45,21 +45,24 @@ export default function App() {
 
   async function handleSaveProduct(payload) {
     try {
-      if (editingProduct) {
-        const res = await fetch(`${API_BASE_URL}/${editingProduct.id}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        if (!res.ok) throw new Error("Gagal memperbarui produk");
-      } else {
-        const res = await fetch(API_BASE_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        if (!res.ok) throw new Error("Gagal menambahkan produk");
+      const url = editingProduct
+        ? `${API_BASE_URL}/${editingProduct.id}`
+        : API_BASE_URL;
+      const method = editingProduct ? "PUT" : "POST";
+
+      const res = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(
+          errData.message || errData.error || `Gagal menyimpan produk (HTTP ${res.status})`
+        );
       }
+
       await fetchProducts();
     } catch (err) {
       alert(err.message);
